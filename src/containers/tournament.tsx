@@ -2,7 +2,9 @@ import React from 'react';
 
 function Tournament() {
   return (
-    <button>Add player</button>
+    <section className="tournament">
+      <button>Add player</button>
+    </section>
   );
 }
 

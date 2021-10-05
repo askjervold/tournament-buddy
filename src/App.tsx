@@ -5,6 +5,7 @@ import './App.css';
 import Routes from './constants/routes';
 import Home from './containers/home';
 import Tournament from './containers/tournament';
+import TournamentContext from './contexts/tournament-context';
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
           <Home />
         </Route>
         <Route path={Routes.TOURNAMENT}>
-          <Tournament />
+          <TournamentContext>
+            <Tournament />
+          </TournamentContext>
         </Route>
       </Switch>
     </Router>
