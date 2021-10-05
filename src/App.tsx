@@ -11,13 +11,13 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path={Routes.HOME}>
-          <Home />
-        </Route>
         <Route path={Routes.TOURNAMENT}>
           <TournamentContext>
             <Tournament />
           </TournamentContext>
+        </Route>
+        <Route path={Routes.HOME}>
+          <Home />
         </Route>
       </Switch>
     </Router>
