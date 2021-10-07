@@ -5,7 +5,7 @@ import { useTournamentContext } from '../contexts/tournament-context';
 
 export default function Setup() {
   const history = useHistory();
-  const { players, setPlayers } = useTournamentContext();
+  const { players, setPlayers, startTournament } = useTournamentContext();
 
   const addPlayer = (_: React.MouseEvent<HTMLButtonElement>) => {
     setPlayers(prev => {
@@ -26,11 +26,8 @@ export default function Setup() {
     });
   }
 
-  const startTournament = (_: React.MouseEvent<HTMLButtonElement>) => {
-    /**
-     * TODO: Eventually, this will close registrations and start the tournament.
-     * For now, we simply go back to the tournament root path.
-     */
+  const start = (_: React.MouseEvent<HTMLButtonElement>) => {
+    startTournament();
     history.push(Routes.TOURNAMENT);
   }
 
@@ -51,7 +48,7 @@ export default function Setup() {
         }
       </ul>
       <button onClick={addPlayer}>Add player</button>
-      <button onClick={startTournament}>Start tournament</button>
+      <button onClick={start}>Start tournament</button>
     </>
   );
 }

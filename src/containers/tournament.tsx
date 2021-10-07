@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Routes from '../constants/routes';
 import Draft from './draft';
+import Overview from './overview';
 import Setup from './setup';
 
 function Tournament() {
@@ -11,9 +12,7 @@ function Tournament() {
     <section className="tournament">
       <Switch>
         <Route exact path={path}>
-          <Link to={path + Routes.DRAFT}>
-            Get draft seatings
-          </Link>
+          <Overview />
         </Route>
         <Route path={path + Routes.SETUP}>
           <Setup />

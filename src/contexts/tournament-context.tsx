@@ -2,6 +2,8 @@ import React, { createContext, Dispatch, PropsWithChildren, ReactNode, SetStateA
 import { Player, Round } from '../types';
 
 type TournamentContextType = {
+  started: boolean;
+  startTournament: Function;
   players: Player[];
   setPlayers: Dispatch<SetStateAction<Player[]>>;
   rounds: Round[];
@@ -9,6 +11,8 @@ type TournamentContextType = {
 };
 
 const initialTournamentContext: TournamentContextType = {
+  started: false,
+  startTournament: () => {},
   players: [],
   setPlayers: (players: SetStateAction<Player[]>) => {},
   rounds: [],
@@ -18,12 +22,19 @@ const initialTournamentContext: TournamentContextType = {
 const Context = createContext(initialTournamentContext);
 
 export default function TournamentContext({ children }: PropsWithChildren<ReactNode>) {
+  const [started, setStarted] = useState<boolean>(false);
   const [players, setPlayers] = useState<Player[]>([]);
   const [rounds, setRounds] = useState<Round[]>([]);
+
+  const startTournament = () => {
+    setStarted(true);
+  }
 
   return (
     <Context.Provider
       value={{
+        started,
+        startTournament,
         players,
         setPlayers,
         rounds,
