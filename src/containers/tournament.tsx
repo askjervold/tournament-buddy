@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Routes from '../constants/routes';
 import Draft from './draft';
 import Overview from './overview';
+import Round from './round';
 import Setup from './setup';
 
 function Tournament() {
@@ -19,6 +20,9 @@ function Tournament() {
         </Route>
         <Route path={path + Routes.DRAFT}>
           <Draft />
+        </Route>
+        <Route path={path + Routes.ROUND + '/:roundNumber'}>
+          <Round />
         </Route>
       </Switch>
     </section>

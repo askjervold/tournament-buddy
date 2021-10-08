@@ -5,10 +5,11 @@ export type Player = {
 export type Match = {
   table: string;
   player1: Player;
-  player2: Player;
+  player2: Player | null;
 };
 
 export type Round = {
-  number: Number;
+  number: number;
   matches: Match[];
+  ended?: boolean;
 };

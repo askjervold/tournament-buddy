@@ -3,6 +3,7 @@ const Routes = {
   TOURNAMENT: '/t',
   SETUP: '/setup',
   DRAFT: '/draft',
+  ROUND: '/round',
 };
 
 export default Routes;
