@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Button from '../components/button';
 import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
 
@@ -7,13 +8,13 @@ export default function Setup() {
   const history = useHistory();
   const { players, setPlayers, startTournament } = useTournamentContext();
 
-  const addPlayer = (_: React.MouseEvent<HTMLButtonElement>) => {
+  const addPlayer = () => {
     setPlayers(prev => {
       return [...prev, { name: '' }];
     });
   }
 
-  const removePlayer = (_: React.MouseEvent<HTMLButtonElement>, index: number) => {
+  const removePlayer = (index: number) => {
     setPlayers(prev => prev.filter((player, i) => i !== index));
   }
 
@@ -26,7 +27,7 @@ export default function Setup() {
     });
   }
 
-  const start = (_: React.MouseEvent<HTMLButtonElement>) => {
+  const start = () => {
     startTournament();
     history.push(Routes.TOURNAMENT);
   }
@@ -42,13 +43,13 @@ export default function Setup() {
                 value={player.name}
                 onChange={event => updatePlayer(event, index)}
               />
-              <button onClick={event => removePlayer(event, index)}>Remove</button>
+              <Button onClick={() => removePlayer(index)}>Remove</Button>
             </article>
           )
         }
       </ul>
-      <button onClick={addPlayer}>Add player</button>
-      <button onClick={start}>Start tournament</button>
+      <Button onClick={addPlayer}>Add player</Button>
+      <Button onClick={start}>Start tournament</Button>
     </>
   );
 }
