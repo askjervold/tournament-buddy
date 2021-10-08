@@ -4,7 +4,6 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { useTournamentContext } from '../contexts/tournament-context';
 import Routes from '../constants/routes';
 import Button from '../components/button';
-import { getRandomPairings } from '../utils/rounds';
 
 type RoundParams = {
   roundNumber: string;
@@ -13,7 +12,7 @@ type RoundParams = {
 function Round() {
   const history = useHistory();
   const { roundNumber: roundNumberParam } = useParams<RoundParams>();
-  const { players, rounds, setRounds } = useTournamentContext();
+  const { rounds, setRounds } = useTournamentContext();
   const roundNumber = parseInt(roundNumberParam, 10);
   const round = rounds.find(r => r.number === roundNumber);
 
@@ -25,13 +24,6 @@ function Round() {
       )
     );
     history.push(Routes.TOURNAMENT);
-  }
-
-  if (round && !round.matches.length) {
-    setRounds(prev => prev.map(r => {
-      if (r.number !== roundNumber) return r;
-      return { ...r, matches: getRandomPairings(players) };
-    }));
   }
 
   return (
