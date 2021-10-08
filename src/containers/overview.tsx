@@ -3,6 +3,7 @@ import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import Button from '../components/button';
 import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
+import { Round } from '../types';
 
 function Overview() {
   const history = useHistory();
@@ -15,15 +16,26 @@ function Overview() {
     history.push(path + Routes.ROUND + `/${roundNumber}`);
   }
 
+  const latestRound: Round | undefined = rounds[rounds.length - 1];
+  const currentRound = latestRound && !latestRound.ended ? latestRound : null;
+
   return (
     <>
       <h1>Tournament overview</h1>
       { started ?
         <>
-          <Link to={path + Routes.DRAFT}>
-            Get draft seatings
-          </Link>
-          <Button onClick={startRound}>Start round</Button>
+          { !latestRound &&
+            <Link to={path + Routes.DRAFT}>
+              Get draft seatings
+            </Link>
+          }
+          { currentRound ?
+            <>
+              <p>Currently in round {currentRound.number}</p>
+              <Link to={path + Routes.ROUND + `/${currentRound.number}`}>Show matches</Link>
+            </> :
+            <Button onClick={startRound}>Start next round</Button>
+          }
         </>
       :
         <Link to={path + Routes.SETUP}>Set up tournament</Link>
