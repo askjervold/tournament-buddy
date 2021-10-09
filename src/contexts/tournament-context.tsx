@@ -22,9 +22,9 @@ const initialTournamentContext: TournamentContextType = {
 const Context = createContext(initialTournamentContext);
 
 export default function TournamentContext({ children }: PropsWithChildren<ReactNode>) {
-  const [started, setStarted] = useState<boolean>(false);
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [rounds, setRounds] = useState<Round[]>([]);
+  const [started, setStarted] = useState<boolean>(initialTournamentContext.started);
+  const [players, setPlayers] = useState<Player[]>(initialTournamentContext.players);
+  const [rounds, setRounds] = useState<Round[]>(initialTournamentContext.rounds);
 
   const startTournament = () => {
     setStarted(true);
