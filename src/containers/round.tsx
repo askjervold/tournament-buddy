@@ -4,6 +4,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { useTournamentContext } from '../contexts/tournament-context';
 import Routes from '../constants/routes';
 import Button from '../components/button';
+import Match from '../components/match';
 
 type RoundParams = {
   roundNumber: string;
@@ -31,11 +32,7 @@ function Round() {
     <>
       <h1>Round {roundNumberParam}</h1>
       <section className="matches">
-        {round.matches.map(match =>
-          <article key={match.table}>
-            {match.player1.name} vs. {match.player2?.name || '** BYE **'}
-          </article>
-        )}
+        { round.matches.map(match => <Match key={match.table} match={match} />) }
       </section>
       <Button onClick={endRound}>End round</Button>
     </> :
