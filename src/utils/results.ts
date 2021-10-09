@@ -1,22 +1,56 @@
 import PointValues from '../constants/pointValues';
 import { Match, Player, PlayerStats, Record, Round } from '../types';
 
-const getMatchesForPlayer = (player: Player, rounds: Round[]): Match[] => {
-  const matches = rounds.reduce((accumulator, current) => {
-    return { ...current, matches: [...accumulator.matches, ...current.matches] };
-  }).matches;
-  return matches.filter(match => match.player1.id === player.id || match.player2?.id === player.id);
+type NormalizedMatch = {
+  opponent: Player;
+  result: NormalizedMatchResult;
+}
+
+type NormalizedMatchResult = {
+  playerWins: number;
+  opponentWins: number;
+  draws: number;
+}
+
+const normalizeMatch = (player: Player, match: Match): NormalizedMatch => {
+  const { player1Wins, player2Wins, draws } = match.result;
+  if (!match.player2 || match.player2.id !== player.id) {
+    return {
+      opponent: match.player2!,
+      result: {
+        playerWins: player1Wins || 0,
+        opponentWins: player2Wins || 0,
+        draws: draws || 0
+      }
+    };
+  } else {
+    return {
+      opponent: match.player1,
+      result: {
+        playerWins: player2Wins || 0,
+        opponentWins: player1Wins || 0,
+        draws: draws || 0
+      }
+    };
+  }
+}
+
+const getMatchesForPlayer = (player: Player, rounds: Round[]): NormalizedMatch[] => {
+  return rounds
+    .reduce((accumulator, current) => {
+      return { ...current, matches: [...accumulator.matches, ...current.matches] };
+    })
+    .matches
+    .filter(match => match.player1.id === player.id || match.player2?.id === player.id)
+    .map(match => normalizeMatch(player, match));
 }
 
 export const getOpponents = (player: Player, rounds: Round[]): Player[] => {
   const matches = getMatchesForPlayer(player, rounds);
   const opponents: Player[] = [];
   matches.forEach(match => {
-    const { player1, player2 } = match;
-    if (!player2) return;
-
-    const opponent = player1.id === player.id ? player2 : player1;
-    opponents.push(opponent);
+    if (!match.opponent) return;
+    opponents.push(match.opponent);
   });
   return opponents;
 }
@@ -25,14 +59,14 @@ const getRecord = (player: Player, rounds: Round[]): Record => {
   const matches = getMatchesForPlayer(player, rounds);
   const record: Record = { wins: 0, losses: 0, draws: 0 };
   matches.forEach(match => {
-    if (!match.player2) {
+    if (!match.opponent) {
       record.wins++;
       return;
     }
-    const p1 = match.result.player1Wins || 0;
-    const p2 = match.result.player2Wins || 0;
-    if (p1 > p2) player.id === match.player1.id ? record.wins++ : record.losses++;
-    else if (p2 > p1) player.id === match.player2.id ? record.wins++ : record.losses++;
+    
+    const { playerWins, opponentWins } = match.result;
+    if (playerWins > opponentWins) record.wins++;
+    else if (opponentWins > playerWins) record.losses++;
     else record.draws++;
   });
   return record;
