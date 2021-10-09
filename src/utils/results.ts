@@ -2,7 +2,9 @@ import PointValues from '../constants/pointValues';
 import { Match, Player, PlayerStats, Record, Round } from '../types';
 
 type NormalizedMatch = {
+  player: Player;
   opponent: Player;
+  winner: Player | null;
   result: NormalizedMatchResult;
 }
 
@@ -12,11 +14,20 @@ type NormalizedMatchResult = {
   draws: number;
 }
 
+const getMatchWinner = (match: Match): Player | null => {
+  const { player1Wins, player2Wins } = match.result;
+  if (player1Wins === player2Wins) return null;
+  return (player1Wins || 0) > (player2Wins || 0) ?
+    match.player1 : match.player2;
+}
+
 const normalizeMatch = (player: Player, match: Match): NormalizedMatch => {
   const { player1Wins, player2Wins, draws } = match.result;
   if (!match.player2 || match.player2.id !== player.id) {
     return {
+      player: match.player1,
       opponent: match.player2!,
+      winner: getMatchWinner(match),
       result: {
         playerWins: player1Wins || 0,
         opponentWins: player2Wins || 0,
@@ -25,7 +36,9 @@ const normalizeMatch = (player: Player, match: Match): NormalizedMatch => {
     };
   } else {
     return {
+      player: match.player2,
       opponent: match.player1,
+      winner: getMatchWinner(match),
       result: {
         playerWins: player2Wins || 0,
         opponentWins: player1Wins || 0,
@@ -78,16 +91,37 @@ export const getScore = (record: Record) => {
     + PointValues.LOSS * record.losses;
 }
 
+const getMatchWinRatio = (player: Player, rounds: Round[]) => {
+  const matches = getMatchesForPlayer(player, rounds);
+  let played = 0, won = 0; 
+  matches.forEach(match => {
+    played++;
+    if (match.winner?.id === player.id) won++;
+  })
+  return won/played;
+}
+
 const getOpponentMatchWinRatio = (player: Player, rounds: Round[]) => {
-  return 0;
+  const opponents = getOpponents(player, rounds);
+  const omw = opponents.map(opp => getMatchWinRatio(opp, rounds));
+  return omw.reduce((acc, curr) => acc + curr)/omw.length;
 }
 
 const getGameWinRatio = (player: Player, rounds: Round[]) => {
-  return 0;
+  const matches = getMatchesForPlayer(player, rounds);
+  let games = 0, wins = 0; 
+  matches.forEach(match => {
+    const { playerWins, opponentWins, draws } = match.result;
+    games += playerWins + opponentWins + draws;
+    wins += playerWins;
+  })
+  return wins/games;
 }
 
 const getOpponentGameWinRatio = (player: Player, rounds: Round[]) => {
-  return 0;
+  const opponents = getOpponents(player, rounds);
+  const ogw = opponents.map(opp => getGameWinRatio(opp, rounds));
+  return ogw.reduce((acc, curr) => acc + curr)/ogw.length;
 }
 
 export const getPlayerStats = (player: Player, rounds: Round[]): PlayerStats => {
