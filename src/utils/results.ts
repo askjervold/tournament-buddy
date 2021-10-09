@@ -77,10 +77,8 @@ const getRecord = (player: Player, rounds: Round[]): Record => {
       return;
     }
     
-    const { playerWins, opponentWins } = match.result;
-    if (playerWins > opponentWins) record.wins++;
-    else if (opponentWins > playerWins) record.losses++;
-    else record.draws++;
+    if (!match.winner) record.draws++;
+    else match.winner.id === player.id ? record.wins++ : record.losses++;
   });
   return record;
 }
