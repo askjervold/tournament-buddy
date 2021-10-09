@@ -10,7 +10,7 @@ export default function Setup() {
 
   const addPlayer = () => {
     setPlayers(prev => {
-      return [...prev, { name: '' }];
+      return [...prev, { name: '', id: players.length + 1 }];
     });
   }
 

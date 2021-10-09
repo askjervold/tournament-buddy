@@ -1,4 +1,5 @@
 export type Player = {
+  id: number;
   name: string;
 };
 
@@ -20,4 +21,17 @@ export type Round = {
   number: number;
   matches: Match[];
   ended?: boolean;
+};
+
+export type PlayerStats = {
+  record: Record;
+  opponentMatchWin: number;
+  gameWin: number;
+  opponentGameWin: number;
+};
+
+export type Record = {
+  wins: number;
+  losses: number;
+  draws: number;
 };
