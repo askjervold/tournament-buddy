@@ -96,7 +96,7 @@ const getMatchWinRatio = (player: Player, rounds: Round[]) => {
     played++;
     if (match.winner?.id === player.id) won++;
   })
-  return won/played;
+  return won/played || 0.33;
 }
 
 const getOpponentMatchWinRatio = (player: Player, rounds: Round[]) => {
