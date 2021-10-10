@@ -4,10 +4,10 @@ export type Player = {
 };
 
 export type Match = {
-  table: string;
   player1: Player;
   player2: Player | null;
   result: MatchResult;
+  table?: string;
   submitted?: boolean;
 };
 
@@ -15,6 +15,19 @@ export type MatchResult = {
   player1Wins: number | null;
   player2Wins: number | null;
   draws: number | null;
+};
+
+export type NormalizedMatch = {
+  player: Player;
+  opponent: Player;
+  winner: Player | null;
+  result: NormalizedMatchResult;
+};
+
+export type NormalizedMatchResult = {
+  playerWins: number;
+  opponentWins: number;
+  draws: number;
 };
 
 export type Round = {
