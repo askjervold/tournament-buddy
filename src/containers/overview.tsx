@@ -19,6 +19,7 @@ function Overview() {
 
   const latestRound: Round | undefined = rounds[rounds.length - 1];
   const currentRound = latestRound && !latestRound.ended ? latestRound : null;
+  const hasFinishedRounds = rounds.filter(round => round.ended).length > 0;
 
   return (
     <>
@@ -30,6 +31,7 @@ function Overview() {
               Get draft seatings
             </Link>
           }
+          { hasFinishedRounds && <Link to={path + Routes.STANDINGS}>View standings</Link> }
           { currentRound ?
             <>
               <p>Currently in round {currentRound.number}</p>

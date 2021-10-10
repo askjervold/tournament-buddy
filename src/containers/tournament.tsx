@@ -5,6 +5,7 @@ import Draft from './draft';
 import Overview from './overview';
 import Round from './round';
 import Setup from './setup';
+import Standings from './standings';
 
 function Tournament() {
   const { path } = useRouteMatch();
@@ -23,6 +24,9 @@ function Tournament() {
         </Route>
         <Route path={path + Routes.ROUND + '/:roundNumber'}>
           <Round />
+        </Route>
+        <Route path={path + Routes.STANDINGS}>
+          <Standings />
         </Route>
       </Switch>
     </section>
