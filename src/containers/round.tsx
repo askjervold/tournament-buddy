@@ -16,6 +16,8 @@ function Round() {
   const { rounds, setRounds } = useTournamentContext();
   const roundNumber = parseInt(roundNumberParam, 10);
   const round = rounds.find((r) => r.number === roundNumber);
+  const allMatchesSubmitted =
+    round?.matches.filter((r) => !r.submitted).length === 0;
 
   const endRound = () => {
     setRounds((prev) =>
@@ -34,7 +36,7 @@ function Round() {
           <Match key={match.table} match={match} />
         ))}
       </section>
-      <Button onClick={endRound}>End round</Button>
+      {allMatchesSubmitted && <Button onClick={endRound}>End round</Button>}
     </>
   ) : (
     <>
