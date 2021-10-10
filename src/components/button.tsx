@@ -7,9 +7,9 @@ type ButtonProps = {
 function Button({ onClick, children }: PropsWithChildren<ButtonProps>) {
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick();
-  }
+  };
 
-  return <button onClick={onClickHandler}>{children}</button>
+  return <button onClick={onClickHandler}>{children}</button>;
 }
 
 export default Button;

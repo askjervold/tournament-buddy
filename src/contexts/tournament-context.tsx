@@ -1,4 +1,12 @@
-import React, { createContext, Dispatch, PropsWithChildren, ReactNode, SetStateAction, useContext, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react';
 import { Player, Round } from '../types';
 
 type TournamentContextType = {
@@ -21,14 +29,22 @@ const initialTournamentContext: TournamentContextType = {
 
 const Context = createContext(initialTournamentContext);
 
-export default function TournamentContext({ children }: PropsWithChildren<ReactNode>) {
-  const [started, setStarted] = useState<boolean>(initialTournamentContext.started);
-  const [players, setPlayers] = useState<Player[]>(initialTournamentContext.players);
-  const [rounds, setRounds] = useState<Round[]>(initialTournamentContext.rounds);
+export default function TournamentContext({
+  children,
+}: PropsWithChildren<ReactNode>) {
+  const [started, setStarted] = useState<boolean>(
+    initialTournamentContext.started
+  );
+  const [players, setPlayers] = useState<Player[]>(
+    initialTournamentContext.players
+  );
+  const [rounds, setRounds] = useState<Round[]>(
+    initialTournamentContext.rounds
+  );
 
   const startTournament = () => {
     setStarted(true);
-  }
+  };
 
   return (
     <Context.Provider
@@ -41,9 +57,9 @@ export default function TournamentContext({ children }: PropsWithChildren<ReactN
         setRounds,
       }}
     >
-      { children }
+      {children}
     </Context.Provider>
   );
-};
+}
 
 export const useTournamentContext = () => useContext(Context);

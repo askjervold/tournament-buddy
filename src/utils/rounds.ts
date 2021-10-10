@@ -15,10 +15,10 @@ export const getRandomPairings = (players: Player[]) => {
       result: {
         player1Wins: player2 ? null : 0,
         player2Wins: player2 ? null : 0,
-        draws: player2 ? null : 0
-      }
+        draws: player2 ? null : 0,
+      },
     });
     table++;
   }
   return matches;
-}
+};

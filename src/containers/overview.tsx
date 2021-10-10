@@ -13,36 +13,42 @@ function Overview() {
 
   const startRound = () => {
     const roundNumber = (rounds[rounds.length - 1]?.number || 0) + 1;
-    setRounds(prev => [...prev, { number: roundNumber, matches: getRandomPairings(players) }]);
+    setRounds((prev) => [
+      ...prev,
+      { number: roundNumber, matches: getRandomPairings(players) },
+    ]);
     history.push(path + Routes.ROUND + `/${roundNumber}`);
-  }
+  };
 
   const latestRound: Round | undefined = rounds[rounds.length - 1];
   const currentRound = latestRound && !latestRound.ended ? latestRound : null;
-  const hasFinishedRounds = rounds.filter(round => round.ended).length > 0;
+  const hasFinishedRounds = rounds.filter((round) => round.ended).length > 0;
 
   return (
     <>
       <h1>Tournament overview</h1>
-      { started ?
+      {started ? (
         <>
-          { !latestRound &&
-            <Link to={path + Routes.DRAFT}>
-              Get draft seatings
-            </Link>
-          }
-          { hasFinishedRounds && <Link to={path + Routes.STANDINGS}>View standings</Link> }
-          { currentRound ?
+          {!latestRound && (
+            <Link to={path + Routes.DRAFT}>Get draft seatings</Link>
+          )}
+          {hasFinishedRounds && (
+            <Link to={path + Routes.STANDINGS}>View standings</Link>
+          )}
+          {currentRound ? (
             <>
               <p>Currently in round {currentRound.number}</p>
-              <Link to={path + Routes.ROUND + `/${currentRound.number}`}>Show matches</Link>
-            </> :
+              <Link to={path + Routes.ROUND + `/${currentRound.number}`}>
+                Show matches
+              </Link>
+            </>
+          ) : (
             <Button onClick={startRound}>Start next round</Button>
-          }
+          )}
         </>
-      :
+      ) : (
         <Link to={path + Routes.SETUP}>Set up tournament</Link>
-      }
+      )}
     </>
   );
 }

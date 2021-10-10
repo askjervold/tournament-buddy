@@ -39,4 +39,4 @@ export type Record = {
 
 export type ScoreBrackets = {
   [score: number]: PlayerStats[];
-}
+};

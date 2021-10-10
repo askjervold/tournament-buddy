@@ -9,44 +9,45 @@ export default function Setup() {
   const { players, setPlayers, startTournament } = useTournamentContext();
 
   const addPlayer = () => {
-    setPlayers(prev => {
+    setPlayers((prev) => {
       return [...prev, { name: '', id: players.length + 1 }];
     });
-  }
+  };
 
   const removePlayer = (index: number) => {
-    setPlayers(prev => prev.filter((player, i) => i !== index));
-  }
+    setPlayers((prev) => prev.filter((player, i) => i !== index));
+  };
 
-  const updatePlayer = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const updatePlayer = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const name = event.currentTarget.value;
-    setPlayers(prev => {
+    setPlayers((prev) => {
       return prev.map((player, i) => {
         return i === index ? { ...player, name } : player;
       });
     });
-  }
+  };
 
   const start = () => {
     startTournament();
     history.push(Routes.TOURNAMENT);
-  }
+  };
 
   return (
     <>
       <ul>
-        {
-          players.map((player, index) =>
-            <article className="player" key={'player' + index}>
-              <input
-                type="text"
-                value={player.name}
-                onChange={event => updatePlayer(event, index)}
-              />
-              <Button onClick={() => removePlayer(index)}>Remove</Button>
-            </article>
-          )
-        }
+        {players.map((player, index) => (
+          <article className="player" key={'player' + index}>
+            <input
+              type="text"
+              value={player.name}
+              onChange={(event) => updatePlayer(event, index)}
+            />
+            <Button onClick={() => removePlayer(index)}>Remove</Button>
+          </article>
+        ))}
       </ul>
       <Button onClick={addPlayer}>Add player</Button>
       <Button onClick={start}>Start tournament</Button>

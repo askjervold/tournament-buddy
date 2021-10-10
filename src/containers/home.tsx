@@ -12,11 +12,9 @@ function Home() {
      * For now, we just navigate to the Tournament route
      **/
     history.push(Routes.TOURNAMENT);
-  }
+  };
 
-  return (
-    <Button onClick={createTournament}>Create tournament</Button>
-  );
+  return <Button onClick={createTournament}>Create tournament</Button>;
 }
 
 export default Home;

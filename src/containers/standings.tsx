@@ -1,5 +1,5 @@
 import React from 'react';
-import truncate from 'lodash/truncate'
+import truncate from 'lodash/truncate';
 import { Link } from 'react-router-dom';
 import Routes from '../constants/routes';
 
@@ -13,12 +13,11 @@ function Standings() {
     const percentage = value * 100;
     return truncate(percentage.toString(), {
       length: 7,
-      omission: ''
+      omission: '',
     });
-  }
+  };
 
-  return (
-    rounds.length > 0 ?
+  return rounds.length > 0 ? (
     <>
       <h1>Standings after {rounds.length} rounds</h1>
       <table>
@@ -32,7 +31,7 @@ function Standings() {
         </tr>
         {standings.map((player, index) => (
           <tr>
-            <td>{ index + 1}</td>
+            <td>{index + 1}</td>
             <td>{player.player.name}</td>
             <td>{getScore(player.record)}</td>
             <td>{formatPercentage(player.opponentMatchWin)}</td>
@@ -42,7 +41,8 @@ function Standings() {
         ))}
       </table>
       <Link to={Routes.TOURNAMENT}>Back to overview</Link>
-    </> :
+    </>
+  ) : (
     <p>No rounds played</p>
   );
 }
