@@ -24,6 +24,7 @@ export type Round = {
 };
 
 export type PlayerStats = {
+  player: Player;
   record: Record;
   opponentMatchWin: number;
   gameWin: number;
@@ -35,3 +36,7 @@ export type Record = {
   losses: number;
   draws: number;
 };
+
+export type ScoreBrackets = {
+  [score: number]: PlayerStats[];
+}

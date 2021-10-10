@@ -1,5 +1,5 @@
 import PointValues from '../constants/pointValues';
-import { Match, Player, PlayerStats, Record, Round } from '../types';
+import { Match, Player, PlayerStats, Record, Round, ScoreBrackets } from '../types';
 
 type NormalizedMatch = {
   player: Player;
@@ -124,9 +124,35 @@ const getOpponentGameWinRatio = (player: Player, rounds: Round[]) => {
 
 export const getPlayerStats = (player: Player, rounds: Round[]): PlayerStats => {
   return {
+    player: player,
     record: getRecord(player, rounds),
     opponentMatchWin: getOpponentMatchWinRatio(player, rounds),
     gameWin: getGameWinRatio(player, rounds),
     opponentGameWin: getOpponentGameWinRatio(player, rounds)
   };
+}
+
+const compareStats = (p1: PlayerStats, p2: PlayerStats): number => {
+  const p1score = getScore(p1.record), p2score = getScore(p2.record);
+  if (p1score !== p2score) return p2score - p1score;
+  if (p1.opponentMatchWin !== p2.opponentMatchWin) return p2.opponentMatchWin - p1.opponentMatchWin;
+  if (p1.gameWin !== p2.gameWin) return p2.gameWin - p1.gameWin;
+  return p2.opponentGameWin - p1.opponentGameWin;
+}
+
+export const getStandings = (players: Player[], rounds: Round[]): PlayerStats[] => {
+  const stats: PlayerStats[] = players
+    .map(player => getPlayerStats(player, rounds));
+  return stats.sort(compareStats);
+}
+
+export const getBrackets = (players: Player[], rounds: Round[]): ScoreBrackets => {
+  const standings = getStandings(players, rounds);
+  const brackets: ScoreBrackets = {};
+  standings.forEach(playerStat => {
+    const score = getScore(playerStat.record);
+    if (brackets[score]) brackets[score].push(playerStat);
+    else brackets[score] = [playerStat];
+  });
+  return brackets;
 }
