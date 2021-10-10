@@ -117,9 +117,10 @@ export const getMatchWinRatio = (player: Player, rounds: Round[]) => {
 };
 
 export const getOpponentMatchWinRatio = (player: Player, rounds: Round[]) => {
+  const cf = 100; // Use a correcting factor to avoid float errors
   const opponents = getOpponents(player, rounds);
   const omw = opponents.map((opp) => getMatchWinRatio(opp, rounds));
-  return omw.reduce((acc, curr) => acc + curr, 0) / omw.length;
+  return omw.reduce((acc, curr) => acc + curr * cf, 0) / (omw.length * cf);
 };
 
 export const getGameWinRatio = (player: Player, rounds: Round[]) => {
@@ -135,9 +136,10 @@ export const getGameWinRatio = (player: Player, rounds: Round[]) => {
 };
 
 export const getOpponentGameWinRatio = (player: Player, rounds: Round[]) => {
+  const cf = 100; // Use a correcting factor to avoid float errors
   const opponents = getOpponents(player, rounds);
   const ogw = opponents.map((opp) => getGameWinRatio(opp, rounds));
-  return ogw.reduce((acc, curr) => acc + curr, 0) / ogw.length;
+  return ogw.reduce((acc, curr) => acc + curr * cf, 0) / (ogw.length * cf);
 };
 
 export const getPlayerStats = (

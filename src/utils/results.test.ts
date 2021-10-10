@@ -284,12 +284,7 @@ describe('getMatchWinRatio', () => {
 
 describe('getOpponentMatchWinRatio', () => {
   test('returns mean of match win ratios of opponents', () => {
-    expect(
-      // Have to do some conversions of result to get correct result without rounding errors
-      parseFloat(
-        getOpponentMatchWinRatio(jace, twoRoundTournament).toPrecision(3)
-      )
-    ).toEqual(0.415);
+    expect(getOpponentMatchWinRatio(jace, twoRoundTournament)).toEqual(0.415);
     expect(getOpponentMatchWinRatio(elspeth, twoRoundTournament)).toEqual(0.75);
   });
 });
@@ -305,14 +300,9 @@ describe('getGameWinRatio', () => {
 
 describe('getOpponentGameWinRatio', () => {
   test('returns fraction of games won by player', () => {
-    expect(
-      // Have to do some conversions of result to get correct result without rounding errors
-      parseFloat(
-        getOpponentGameWinRatio(elspeth, twoRoundTournament).toPrecision(1)
-      )
-    ).toEqual(0.6);
+    expect(getOpponentGameWinRatio(elspeth, twoRoundTournament)).toEqual(0.6);
     expect(getOpponentGameWinRatio(jace, twoRoundTournament)).toEqual(0.4);
     expect(getOpponentGameWinRatio(chandra, twoRoundTournament)).toEqual(0.4);
-    // expect(getOpponentGameWinRatio(garruk, twoRoundTournament)).toEqual(0.6);
+    expect(getOpponentGameWinRatio(garruk, twoRoundTournament)).toEqual(0.6);
   });
 });
