@@ -1,6 +1,10 @@
 import { Player, Round } from '../types';
 import { getRandomPairings, getSwissPairings } from './rounds';
 
+const ulamog: Player = {
+  id: 0,
+  name: 'Ulamog',
+};
 const elspeth: Player = {
   id: 1,
   name: 'Elspeth Tirel',
@@ -24,6 +28,10 @@ const garruk: Player = {
 const bolas: Player = {
   id: 6,
   name: 'Nicol Bolas',
+};
+const karona: Player = {
+  id: 7,
+  name: 'Karona',
 };
 const monocolored = [elspeth, jace, liliana, chandra, garruk];
 
@@ -70,14 +78,30 @@ describe('getSwissPairings', () => {
           draws: 0,
         },
       },
+      {
+        player1: ulamog,
+        player2: karona,
+        result: {
+          player1Wins: 1,
+          player2Wins: 1,
+          draws: 1,
+        },
+      },
     ],
   };
 
   test('pairs players based on score', () => {
-    const pairings = getSwissPairings(
-      [elspeth, jace, liliana, chandra, garruk, bolas],
-      [round1]
-    );
-    console.log(pairings);
+    const players = [
+      elspeth,
+      jace,
+      liliana,
+      chandra,
+      garruk,
+      bolas,
+      ulamog,
+      karona,
+    ];
+    const pairings = getSwissPairings(players, [round1]);
+    expect(pairings.length).toEqual(Math.ceil(players.length / 2));
   });
 });
