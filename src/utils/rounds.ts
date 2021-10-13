@@ -1,7 +1,12 @@
 import includes from 'lodash/includes';
 import shuffle from 'lodash/shuffle';
 import { Match, Player, PlayerStats, Round } from '../types';
-import { getOpponents, getPlayerStats, getScore } from './results';
+import {
+  getOpponents,
+  getPlayerStats,
+  getScore,
+  getStandings,
+} from './results';
 
 type Pairing = {
   player1: Player;
@@ -127,10 +132,11 @@ const generateScenarios = (
       addPairingToScenario(scenario, getPairing(players[0], null, rounds))
     );
 
-  const player1 = players.shift()!;
+  const sortedPlayers = getStandings(players, rounds).map((p) => p.player);
+  const player1 = sortedPlayers.shift()!;
   const player1PairingOptions = getAllowedPairingsForPlayer(
     player1,
-    players,
+    sortedPlayers,
     rounds
   );
 
@@ -142,7 +148,7 @@ const generateScenarios = (
     return player1PairingOptions.flatMap((pairing) =>
       generateScenarios(
         [addPairingToScenario({ pairings: [], penalty: -1 }, pairing)],
-        players.filter((p) => p.id !== pairing.player2?.id),
+        sortedPlayers.filter((p) => p.id !== pairing.player2?.id),
         rounds
       )
     );
@@ -151,7 +157,7 @@ const generateScenarios = (
       return player1PairingOptions.flatMap((pairing) =>
         generateScenarios(
           [addPairingToScenario(scenario, pairing)],
-          players.filter((p) => p.id !== pairing.player2?.id),
+          sortedPlayers.filter((p) => p.id !== pairing.player2?.id),
           rounds
         )
       );

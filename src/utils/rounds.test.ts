@@ -103,5 +103,6 @@ describe('getSwissPairings', () => {
     ];
     const pairings = getSwissPairings(players, [round1]);
     expect(pairings.length).toEqual(Math.ceil(players.length / 2));
+    pairings.map((pairing) => expect(pairing.penalty).toBeLessThan(10));
   });
 });
