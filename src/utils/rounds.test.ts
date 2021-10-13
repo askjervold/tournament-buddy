@@ -142,7 +142,7 @@ describe('getSwissPairings', () => {
       ulamog,
       karona,
     ];
-    const pairings = getSwissPairings(players, [round1, round2]);
+    const pairings = getSwissPairings(players, [round1, round2], false);
     expect(pairings.length).toEqual(Math.ceil(players.length / 2));
     pairings.map((pairing) => expect(pairing.penalty).toBeLessThan(10));
   });

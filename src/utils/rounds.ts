@@ -1,5 +1,6 @@
 import includes from 'lodash/includes';
 import shuffle from 'lodash/shuffle';
+import { REPEAT_OPPONENT_PENALTY } from '../constants/results';
 import { Match, Player, PlayerStats, Round } from '../types';
 import {
   getOpponents,
@@ -30,8 +31,17 @@ export const getRandomPairings = (players: Player[]): Pairing[] => {
   return pairings;
 };
 
-export const getSwissPairings = (players: Player[], rounds: Round[]) => {
-  const scenarios = generateScenarios([], players, rounds);
+export const getSwissPairings = (
+  players: Player[],
+  rounds: Round[],
+  allowRepeatOpponents: boolean
+) => {
+  const scenarios = generateScenarios(
+    [],
+    players,
+    rounds,
+    allowRepeatOpponents
+  );
   const expectedNumberOfRoundsInScenario = Math.ceil(players.length / 2);
   const validScenarios = scenarios.filter(
     (scenario) => scenario.pairings.length === expectedNumberOfRoundsInScenario
@@ -70,7 +80,8 @@ export const getMatchesFromPairings = (pairings: Pairing[]): Match[] => {
 const getPairing = (
   player1: Player,
   player2: Player | null,
-  rounds?: Round[]
+  rounds?: Round[],
+  isRepeatOpponent?: boolean
 ): Pairing => {
   return {
     player1,
@@ -85,22 +96,31 @@ const getPairing = (
   };
 };
 
-const getPairingPenalty = (player1: PlayerStats, player2: PlayerStats) => {
-  return Math.pow(getScore(player1.record) - getScore(player2.record), 2);
+const getPairingPenalty = (
+  player1: PlayerStats,
+  player2: PlayerStats,
+  isRepeatOpponent: boolean = false
+) => {
+  const repeatPenalty = isRepeatOpponent ? REPEAT_OPPONENT_PENALTY : 0;
+  return (
+    Math.pow(getScore(player1.record) - getScore(player2.record), 2) +
+    repeatPenalty
+  );
 };
 
 const getAllowedPairingsForPlayer = (
   player1: Player,
   opponents: Player[],
-  rounds: Round[]
+  rounds: Round[],
+  allowRepeatOpponents: boolean
 ): Pairing[] => {
   const ineligible: Player[] = getOpponents(player1, rounds);
   return opponents
-    .map((player2) =>
-      includes(ineligible, player2)
-        ? null
-        : getPairing(player1, player2, rounds)
-    )
+    .map((player2) => {
+      const priorOpponent: boolean = includes(ineligible, player2);
+      if (priorOpponent && !allowRepeatOpponents) return null;
+      return getPairing(player1, player2, rounds, priorOpponent);
+    })
     .filter((pairing) => pairing !== null) as Pairing[];
 };
 
@@ -114,7 +134,8 @@ const addPairingToScenario = (
 const generateScenarios = (
   scenarios: PairingsScenario[],
   players: Player[],
-  rounds: Round[]
+  rounds: Round[],
+  allowRepeatOpponents: boolean
 ): PairingsScenario[] => {
   if (players.length === 0) return scenarios;
   if (players.length === 1)
@@ -127,7 +148,8 @@ const generateScenarios = (
   const player1PairingOptions = getAllowedPairingsForPlayer(
     player1,
     sortedPlayers,
-    rounds
+    rounds,
+    allowRepeatOpponents
   );
 
   if (player1PairingOptions.length === 0) {
@@ -139,7 +161,8 @@ const generateScenarios = (
       generateScenarios(
         [addPairingToScenario({ pairings: [], penalty: -1 }, pairing)],
         sortedPlayers.filter((p) => p.id !== pairing.player2?.id),
-        rounds
+        rounds,
+        allowRepeatOpponents
       )
     );
   } else {
@@ -148,7 +171,8 @@ const generateScenarios = (
         generateScenarios(
           [addPairingToScenario(scenario, pairing)],
           sortedPlayers.filter((p) => p.id !== pairing.player2?.id),
-          rounds
+          rounds,
+          allowRepeatOpponents
         )
       );
     });

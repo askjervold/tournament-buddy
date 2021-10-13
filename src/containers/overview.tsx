@@ -13,7 +13,7 @@ function Overview() {
 
   const startRound = () => {
     const roundNumber = (rounds[rounds.length - 1]?.number || 0) + 1;
-    const pairings = rounds.length === 0 ? getRandomPairings(players) : getSwissPairings(players, rounds)
+    const pairings = rounds.length === 0 ? getRandomPairings(players) : getSwissPairings(players, rounds, false)
 
     setRounds((prev) => [
       ...prev,
