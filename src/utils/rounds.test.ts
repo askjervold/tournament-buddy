@@ -89,6 +89,47 @@ describe('getSwissPairings', () => {
       },
     ],
   };
+  const round2: Round = {
+    number: 2,
+    matches: [
+      {
+        player1: liliana,
+        player2: bolas,
+        result: {
+          player1Wins: 1,
+          player2Wins: 2,
+          draws: 0,
+        },
+      },
+      {
+        player1: elspeth,
+        player2: ulamog,
+        result: {
+          player1Wins: 2,
+          player2Wins: 1,
+          draws: 0,
+        },
+      },
+      {
+        player1: karona,
+        player2: garruk,
+        result: {
+          player1Wins: 0,
+          player2Wins: 2,
+          draws: 0,
+        },
+      },
+      {
+        player1: jace,
+        player2: chandra,
+        result: {
+          player1Wins: 0,
+          player2Wins: 2,
+          draws: 0,
+        },
+      },
+    ],
+  };
 
   test('pairs players based on score', () => {
     const players = [
@@ -101,7 +142,7 @@ describe('getSwissPairings', () => {
       ulamog,
       karona,
     ];
-    const pairings = getSwissPairings(players, [round1]);
+    const pairings = getSwissPairings(players, [round1, round2]);
     expect(pairings.length).toEqual(Math.ceil(players.length / 2));
     pairings.map((pairing) => expect(pairing.penalty).toBeLessThan(10));
   });

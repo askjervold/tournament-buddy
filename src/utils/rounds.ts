@@ -19,26 +19,15 @@ type PairingsScenario = {
   penalty: number;
 };
 
-export const getRandomPairings = (players: Player[]): Match[] => {
+export const getRandomPairings = (players: Player[]): Pairing[] => {
   const shuffledPlayers = shuffle(players);
-  const matches: Match[] = [];
-  let table = 1;
+  const pairings: Pairing[] = [];
   while (shuffledPlayers.length > 0) {
     const player1 = shuffledPlayers.shift()!,
       player2 = shuffledPlayers.shift() || null;
-    matches.push({
-      table: table.toString(),
-      player1,
-      player2,
-      result: {
-        player1Wins: player2 ? null : 0,
-        player2Wins: player2 ? null : 0,
-        draws: player2 ? null : 0,
-      },
-    });
-    table++;
+    pairings.push(getPairing(player1, player2));
   }
-  return matches;
+  return pairings;
 };
 
 export const getSwissPairings = (players: Player[], rounds: Round[]) => {
@@ -78,6 +67,24 @@ export const getMatchesFromPairings = (pairings: Pairing[]): Match[] => {
   }));
 };
 
+const getPairing = (
+  player1: Player,
+  player2: Player | null,
+  rounds?: Round[]
+): Pairing => {
+  return {
+    player1,
+    player2,
+    penalty:
+      player2 && rounds
+        ? getPairingPenalty(
+            getPlayerStats(player1, rounds),
+            getPlayerStats(player2, rounds)
+          )
+        : -1,
+  };
+};
+
 const getPairingPenalty = (player1: PlayerStats, player2: PlayerStats) => {
   return Math.pow(getScore(player1.record) - getScore(player2.record), 2);
 };
@@ -95,23 +102,6 @@ const getAllowedPairingsForPlayer = (
         : getPairing(player1, player2, rounds)
     )
     .filter((pairing) => pairing !== null) as Pairing[];
-};
-
-const getPairing = (
-  player1: Player,
-  player2: Player | null,
-  rounds: Round[]
-): Pairing => {
-  return {
-    player1,
-    player2,
-    penalty: player2
-      ? getPairingPenalty(
-          getPlayerStats(player1, rounds),
-          getPlayerStats(player2, rounds)
-        )
-      : -1,
-  };
 };
 
 const addPairingToScenario = (
