@@ -21,16 +21,19 @@ function Standings() {
     <>
       <h1>Standings after {rounds.length} rounds</h1>
       <table>
-        <tr>
-          <th>Place</th>
-          <th>Player</th>
-          <th>Score</th>
-          <th>OMW%</th>
-          <th>GW%</th>
-          <th>OGW%</th>
-        </tr>
-        {standings.map((player, index) => (
+        <thead>
           <tr>
+            <th>Place</th>
+            <th>Player</th>
+            <th>Score</th>
+            <th>OMW%</th>
+            <th>GW%</th>
+            <th>OGW%</th>
+          </tr>
+        </thead>
+        <tbody>
+        {standings.map((player, index) => (
+          <tr key={player.player.id}>
             <td>{index + 1}</td>
             <td>{player.player.name}</td>
             <td>{getScore(player.record)}</td>
@@ -39,6 +42,7 @@ function Standings() {
             <td>{formatPercentage(player.opponentGameWin)}</td>
           </tr>
         ))}
+        </tbody>
       </table>
       <Link to={Routes.TOURNAMENT}>Back to overview</Link>
     </>
