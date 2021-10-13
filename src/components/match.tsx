@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTournamentContext } from '../contexts/tournament-context';
-import { Match as MatchType, MatchResult } from '../types';
+import { Match as MatchType, MatchResult, Player } from '../types';
+import { getPlayerStats, getScore } from '../utils/results';
 import Button from './button';
 
 type MatchProps = {
@@ -41,9 +42,14 @@ function Match({ match }: MatchProps) {
     );
   };
 
+  const getPlayerLabel = (player: Player | null): string => {
+    if (!player) return '** BYE **'
+    return `${player.name} (${getScore(getPlayerStats(player, rounds).record)})`
+  }
+
   return (
     <article>
-      {match.player1.name} vs. {match.player2?.name || '** BYE **'}
+      {match.table}. {getPlayerLabel(match.player1)} vs. {getPlayerLabel(match.player2)}
       {match.submitted ? (
         <p className="result">
           {match.result.player1Wins}-{match.result.player2Wins}-

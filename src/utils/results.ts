@@ -146,12 +146,13 @@ export const getPlayerStats = (
   player: Player,
   rounds: Round[]
 ): PlayerStats => {
+  const finishedRounds = rounds.filter((round) => round.ended);
   return {
     player: player,
-    record: getRecord(player, rounds),
-    opponentMatchWin: getOpponentMatchWinRatio(player, rounds),
-    gameWin: getGameWinRatio(player, rounds),
-    opponentGameWin: getOpponentGameWinRatio(player, rounds),
+    record: getRecord(player, finishedRounds),
+    opponentMatchWin: getOpponentMatchWinRatio(player, finishedRounds),
+    gameWin: getGameWinRatio(player, finishedRounds),
+    opponentGameWin: getOpponentGameWinRatio(player, finishedRounds),
   };
 };
 
