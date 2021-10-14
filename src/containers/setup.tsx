@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../components/button';
 import Routes from '../constants/routes';
@@ -8,11 +8,14 @@ import { endTournament } from '../service';
 export default function Setup() {
   const history = useHistory();
   const { players, setPlayers, startTournament } = useTournamentContext();
+  const [name, setName] = useState<string>('');
+  const [editing, setEditing] = useState<number>(-1);
 
   const addPlayer = () => {
     setPlayers((prev) => {
-      return [...prev, { name: '', id: players.length + 1 }];
+      return [...prev, { name, id: players.length + 1 }];
     });
+    setName('');
   };
 
   const removePlayer = (index: number) => {
@@ -31,6 +34,10 @@ export default function Setup() {
     });
   };
 
+  const editPlayer = (index: number) => {
+    setEditing(index);
+  }
+
   const start = () => {
     startTournament();
     history.push(Routes.TOURNAMENT);
@@ -43,19 +50,37 @@ export default function Setup() {
 
   return (
     <>
+      <input
+        type="text"
+        value={name}
+        onChange={(event) => setName(event.currentTarget.value)}
+      />
+      <Button onClick={addPlayer}>Add player</Button>
       <ul>
         {players.map((player, index) => (
           <article className="player" key={'player' + index}>
-            <input
-              type="text"
-              value={player.name}
-              onChange={(event) => updatePlayer(event, index)}
-            />
+            {player.id}.&nbsp;
+            {
+              editing === index ? (
+                <>
+                  <input
+                    type="text"
+                    value={player.name}
+                    onChange={(event) => updatePlayer(event, index)}
+                  />
+                  <Button onClick={() => editPlayer(-1)}>Save</Button>
+                </>
+              ) : (
+                <>
+                  {player.name}
+                  <Button onClick={() => editPlayer(index)}>Edit</Button>
+                </>
+              )
+            }
             <Button onClick={() => removePlayer(index)}>Remove</Button>
           </article>
         ))}
       </ul>
-      <Button onClick={addPlayer}>Add player</Button>
       <Button onClick={start}>Start tournament</Button>
       <Button onClick={cancel}>Cancel tournament</Button>
     </>
