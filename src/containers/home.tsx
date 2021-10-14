@@ -11,7 +11,7 @@ function Home() {
      * TODO: This will actually create a tournament in the database later
      * For now, we just navigate to the Tournament route
      **/
-    history.push(Routes.TOURNAMENT);
+    history.push(Routes.TOURNAMENT + Routes.SETUP);
   };
 
   return <Button onClick={createTournament}>Create tournament</Button>;

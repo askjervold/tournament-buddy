@@ -1,3 +1,9 @@
+export type Tournament = {
+  players: Player[];
+  rounds: Round[];
+  started: boolean;
+};
+
 export type Player = {
   id: number;
   name: string;

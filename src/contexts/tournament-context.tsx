@@ -5,8 +5,10 @@ import React, {
   ReactNode,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react';
+import { getTournament, saveTournament } from '../service';
 import { Player, Round } from '../types';
 
 type TournamentContextType = {
@@ -44,7 +46,21 @@ export default function TournamentContext({
 
   const startTournament = () => {
     setStarted(true);
+    saveTournament(players, rounds, true);
   };
+
+  useEffect(() => {
+    const tournament = getTournament();
+    if (tournament) {
+      setPlayers(tournament.players);
+      setRounds(tournament.rounds);
+      setStarted(tournament.started);
+    }
+  }, []);
+
+  useEffect(() => {
+    saveTournament(players, rounds, started);
+  }, [players, rounds, started]);
 
   return (
     <Context.Provider

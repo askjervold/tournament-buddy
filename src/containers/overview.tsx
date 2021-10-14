@@ -3,6 +3,7 @@ import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import Button from '../components/button';
 import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
+import { endTournament } from '../service';
 import { Round } from '../types';
 import { getMatchesFromPairings, getRandomPairings, getSwissPairings } from '../utils/rounds';
 
@@ -47,6 +48,7 @@ function Overview() {
           ) : (
             <Button onClick={startRound}>Start next round</Button>
           )}
+          <Button onClick={endTournament}>End tournament</Button>
         </>
       ) : (
         <Link to={path + Routes.SETUP}>Set up tournament</Link>

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '../components/button';
 import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
+import { endTournament } from '../service';
 
 export default function Setup() {
   const history = useHistory();
@@ -35,6 +36,11 @@ export default function Setup() {
     history.push(Routes.TOURNAMENT);
   };
 
+  const cancel = () => {
+    endTournament();
+    history.push(Routes.HOME);
+  };
+
   return (
     <>
       <ul>
@@ -51,6 +57,7 @@ export default function Setup() {
       </ul>
       <Button onClick={addPlayer}>Add player</Button>
       <Button onClick={start}>Start tournament</Button>
+      <Button onClick={cancel}>Cancel tournament</Button>
     </>
   );
 }
