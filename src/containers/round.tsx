@@ -17,7 +17,7 @@ function Round() {
   const roundNumber = parseInt(roundNumberParam, 10);
   const round = rounds.find((r) => r.number === roundNumber);
   const allMatchesSubmitted =
-    round?.matches.filter((r) => !r.submitted).length === 0;
+    round?.matches.filter((r) => r.player2 && !r.submitted).length === 0;
 
   const endRound = () => {
     setRounds((prev) =>
