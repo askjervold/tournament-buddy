@@ -9,7 +9,7 @@ function Button({ onClick, children }: PropsWithChildren<ButtonProps>) {
     onClick();
   };
 
-  return <button onClick={onClickHandler}>{children}</button>;
+  return <button className="btn" onClick={onClickHandler}>{children}</button>;
 }
 
 export default Button;

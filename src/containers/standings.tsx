@@ -1,8 +1,8 @@
 import React from 'react';
 import truncate from 'lodash/truncate';
-import { Link } from 'react-router-dom';
-import Routes from '../constants/routes';
 
+import LinkButton from '../components/link-button';
+import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
 import { getScore, getStandings } from '../utils/results';
 
@@ -19,7 +19,7 @@ function Standings() {
 
   return rounds.length > 0 ? (
     <>
-      <h1>Standings after {rounds.length} rounds</h1>
+      <h1>Standings after {rounds.length} round{rounds.length > 1 ? 's' : ''}</h1>
       <table>
         <thead>
           <tr>
@@ -44,7 +44,7 @@ function Standings() {
         ))}
         </tbody>
       </table>
-      <Link to={Routes.TOURNAMENT}>Back to overview</Link>
+      <LinkButton to={Routes.TOURNAMENT}>Back to overview</LinkButton>
     </>
   ) : (
     <p>No rounds played</p>

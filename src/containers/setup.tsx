@@ -50,6 +50,7 @@ export default function Setup() {
 
   return (
     <>
+      <h1>Set up tournament</h1>
       <input
         type="text"
         value={name}

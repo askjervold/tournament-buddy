@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import Button from '../components/button';
+import LinkButton from '../components/link-button';
 import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
 import { endTournament } from '../service';
@@ -33,17 +34,17 @@ function Overview() {
       {started ? (
         <>
           {!latestRound && (
-            <Link to={path + Routes.DRAFT}>Get draft seatings</Link>
+            <LinkButton to={path + Routes.DRAFT}>Get draft seatings</LinkButton>
           )}
           {hasFinishedRounds && (
-            <Link to={path + Routes.STANDINGS}>View standings</Link>
+            <LinkButton to={path + Routes.STANDINGS}>View standings</LinkButton>
           )}
           {currentRound ? (
             <>
               <p>Currently in round {currentRound.number}</p>
-              <Link to={path + Routes.ROUND + `/${currentRound.number}`}>
+              <LinkButton to={path + Routes.ROUND + `/${currentRound.number}`}>
                 Show matches
-              </Link>
+              </LinkButton>
             </>
           ) : (
             <Button onClick={startRound}>Start next round</Button>
@@ -51,7 +52,7 @@ function Overview() {
           <Button onClick={endTournament}>End tournament</Button>
         </>
       ) : (
-        <Link to={path + Routes.SETUP}>Set up tournament</Link>
+        <LinkButton to={path + Routes.SETUP}>Set up tournament</LinkButton>
       )}
     </>
   );

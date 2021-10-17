@@ -1,0 +1,56 @@
+$input-border-radius: 0.25rem;
+$input-font-size: 1rem;
+$input-padding: 0.5rem;
+$input-margin: 0.25rem;
+
+body {
+  background-color: #a35436;
+  color: white;
+}
+
+a {
+  color: ivory;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+#app-header {
+  padding: 0.5rem;
+
+  .home-link {
+    font-weight: bold;
+  }
+}
+
+main {
+  text-align: center;
+}
+
+.btn {
+  color: white;
+  background-color: #64877a;
+  border: none;
+  border-radius: $input-border-radius;
+  font-size: $input-font-size;
+  cursor: pointer;
+  padding: $input-padding;
+  margin: $input-margin;
+  min-width: 6rem;
+  max-width: 10rem;
+
+  &:hover {
+    background-color: rgba(100, 135, 122, 0.9);
+    text-decoration: none;
+  }
+}
+
+input {
+  border: none;
+  border-radius: $input-border-radius;
+  font-size: $input-font-size;
+  padding: $input-padding;
+  margin: $input-margin;
+}

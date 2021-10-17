@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import shuffle from 'lodash/shuffle';
 
-import { useTournamentContext } from '../contexts/tournament-context';
+import LinkButton from '../components/link-button';
 import Routes from '../constants/routes';
+import { useTournamentContext } from '../contexts/tournament-context';
 
 function Draft() {
   const { players } = useTournamentContext();
@@ -22,7 +22,7 @@ function Draft() {
           </div>
         ))}
       </section>
-      <Link to={Routes.TOURNAMENT}>Back to overview</Link>
+      <LinkButton to={Routes.TOURNAMENT}>Back to overview</LinkButton>
     </>
   );
 }

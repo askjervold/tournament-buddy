@@ -14,7 +14,12 @@ function Home() {
     history.push(Routes.TOURNAMENT + Routes.SETUP);
   };
 
-  return <Button onClick={createTournament}>Create tournament</Button>;
+  return (
+    <>
+      <h1>Tournament Buddy</h1>
+      <Button onClick={createTournament}>Create tournament</Button>
+    </>
+  );
 }
 
 export default Home;
