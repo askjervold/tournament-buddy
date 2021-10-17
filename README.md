@@ -2,7 +2,7 @@
 
 Tournament Buddy aims to be a helpful web app for setting up and running small Magic: the Gathering tournaments.
 
-**DISCLAIMER:** The app is still very much a work in progress, but despite currently looking even worse the WER, it contains all necessary features to run a small tournament (see features below).
+**DISCLAIMER:** The app is still very much a work in progress, but contains all necessary features to run a small tournament (see features below).
 
 ## Available features
 

@@ -24,6 +24,9 @@ function App() {
         </Route>
       </Switch>
       </main>
+      <footer id="app-footer">
+        <a href="https://github.com/askjervold/tournament-buddy">Fork me on GitHub</a>
+      </footer>
     </Router>
   );
 }

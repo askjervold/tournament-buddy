@@ -8,13 +8,11 @@ body {
   color: white;
 }
 
-a {
-  color: ivory;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #app-header {
@@ -27,6 +25,22 @@ a {
 
 main {
   text-align: center;
+  flex: 1 0 auto;
+}
+
+#app-footer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0.25rem;
+}
+
+a {
+  color: ivory;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .btn {
