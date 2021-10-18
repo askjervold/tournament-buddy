@@ -25,7 +25,7 @@ function App() {
       </Switch>
       </main>
       <footer id="app-footer">
-        <a href="https://github.com/askjervold/tournament-buddy">Fork me on GitHub</a>
+        <a href="https://github.com/askjervold/tournament-buddy"><i className="fab fa-github" /></a>
       </footer>
     </Router>
   );
