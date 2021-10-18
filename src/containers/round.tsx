@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { useTournamentContext } from '../contexts/tournament-context';
 import Routes from '../constants/routes';
 import Button from '../components/button';
+import LinkButton from '../components/link-button';
 import Match from '../components/match';
 
 type RoundParams = {
@@ -41,7 +42,7 @@ function Round() {
   ) : (
     <>
       <p>This round has not yet started!</p>
-      <Link to={Routes.TOURNAMENT}>Back to overview</Link>
+      <LinkButton to={Routes.TOURNAMENT}>Back to overview</LinkButton>
     </>
   );
 }

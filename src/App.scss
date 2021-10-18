@@ -56,8 +56,25 @@ a {
   max-width: 10rem;
 
   &:hover {
-    background-color: rgba(100, 135, 122, 0.9);
+    background-color: rgba(100, 135, 122, 0.8);
     text-decoration: none;
+  }
+
+  &.btn-remove {
+    background-color: maroon;
+
+    &:hover {
+      background-color: rgba(128, 0, 0, 0.7);
+    }
+  }
+
+  &.block {
+    display: block;
+    margin: 0.5rem auto;
+  }
+
+  &.inline {
+    display: inline-block;
   }
 }
 

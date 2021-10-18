@@ -56,7 +56,7 @@ export default function Setup() {
         value={name}
         onChange={(event) => setName(event.currentTarget.value)}
       />
-      <Button onClick={addPlayer}>Add player</Button>
+      <Button onClick={addPlayer} inline={true}>Add player</Button>
       <ul>
         {players.map((player, index) => (
           <article className="player" key={'player' + index}>
@@ -69,21 +69,21 @@ export default function Setup() {
                     value={player.name}
                     onChange={(event) => updatePlayer(event, index)}
                   />
-                  <Button onClick={() => editPlayer(-1)}>Save</Button>
+                  <Button onClick={() => editPlayer(-1)} inline={true}>Save</Button>
                 </>
               ) : (
                 <>
                   {player.name}
-                  <Button onClick={() => editPlayer(index)}>Edit</Button>
+                  <Button onClick={() => editPlayer(index)} inline={true}>Edit</Button>
                 </>
               )
             }
-            <Button onClick={() => removePlayer(index)}>Remove</Button>
+            <Button onClick={() => removePlayer(index)} inline={true} remove={true}>Remove</Button>
           </article>
         ))}
       </ul>
       <Button onClick={start}>Start tournament</Button>
-      <Button onClick={cancel}>Cancel tournament</Button>
+      <Button onClick={cancel} remove={true}>Cancel tournament</Button>
     </>
   );
 }
