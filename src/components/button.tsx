@@ -4,9 +4,10 @@ type ButtonProps = {
   onClick: Function;
   remove?: boolean;
   inline?: boolean;
+  icon?: boolean;
 };
 
-function Button({ onClick, remove = false, inline = false, children }: PropsWithChildren<ButtonProps>) {
+function Button({ onClick, inline = false, icon = false, remove = false, children }: PropsWithChildren<ButtonProps>) {
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick();
   };
@@ -17,6 +18,8 @@ function Button({ onClick, remove = false, inline = false, children }: PropsWith
   if (inline) classNames.push('inline');
   else classNames.push('block');
 
+  if (icon) classNames.push('btn-icon')
+  else classNames.push('btn-solid')
 
   return <button className={classNames.join(' ')} onClick={onClickHandler}>{children}</button>;
 }

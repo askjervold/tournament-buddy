@@ -57,31 +57,33 @@ export default function Setup() {
         onChange={(event) => setName(event.currentTarget.value)}
       />
       <Button onClick={addPlayer} inline={true}>Add player</Button>
-      <ul>
+      <ol className="player-list">
         {players.map((player, index) => (
-          <article className="player" key={'player' + index}>
-            {player.id}.&nbsp;
+          <li className="player" key={'player' + player.id}>
+            <div>
             {
               editing === index ? (
                 <>
                   <input
+                    className="player-name"
                     type="text"
                     value={player.name}
                     onChange={(event) => updatePlayer(event, index)}
                   />
-                  <Button onClick={() => editPlayer(-1)} inline={true}>Save</Button>
+                  <Button onClick={() => editPlayer(-1)} inline={true}><i className="fas fa-check" /></Button>
                 </>
               ) : (
                 <>
-                  {player.name}
-                  <Button onClick={() => editPlayer(index)} inline={true}>Edit</Button>
+                  <span className="player-name">{player.name}</span>
+                  <Button onClick={() => editPlayer(index)} inline={true}><i className="fas fa-edit" /></Button>
                 </>
               )
             }
-            <Button onClick={() => removePlayer(index)} inline={true} remove={true}>Remove</Button>
-          </article>
+            <Button onClick={() => removePlayer(index)} inline={true}><i className="fas fa-user-minus" /></Button>
+            </div>
+          </li>
         ))}
-      </ul>
+      </ol>
       <Button onClick={start}>Start tournament</Button>
       <Button onClick={cancel} remove={true}>Cancel tournament</Button>
     </>

@@ -52,8 +52,6 @@ a {
   cursor: pointer;
   padding: $input-padding;
   margin: $input-margin;
-  min-width: 6rem;
-  max-width: 10rem;
 
   &:hover {
     background-color: rgba(100, 135, 122, 0.8);
@@ -71,9 +69,12 @@ a {
   &.block {
     display: block;
     margin: 0.5rem auto;
+    min-width: 6rem;
+    max-width: 10rem;
   }
 
-  &.inline {
+  &.inline,
+  &.btn-icon {
     display: inline-block;
   }
 }
@@ -84,4 +85,30 @@ input {
   font-size: $input-font-size;
   padding: $input-padding;
   margin: $input-margin;
+}
+
+.player-list {
+  padding-left: 1.25rem;
+  margin: 1rem;
+  max-width: 400px;
+
+  @media (min-width: 768px) {
+    margin: 1rem auto;
+  }
+
+  div {
+    display: flex;
+  }
+
+  .player {
+    margin-bottom: 0.5rem;
+  }
+
+  .player-name {
+    text-align: left;
+    flex-grow: 1;
+    margin: $input-margin;
+    padding: $input-padding;
+    border-bottom: solid 1px;
+  }
 }
