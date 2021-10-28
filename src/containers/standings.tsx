@@ -20,15 +20,16 @@ function Standings() {
   return rounds.length > 0 ? (
     <>
       <h1>Standings after {rounds.length} round{rounds.length > 1 ? 's' : ''}</h1>
-      <table>
+      <table className="standings">
         <thead>
           <tr>
             <th>Place</th>
             <th>Player</th>
             <th>Score</th>
-            <th>OMW%</th>
-            <th>GW%</th>
-            <th>OGW%</th>
+            <th className="tiebreaker">OMW%</th>
+            <th className="tiebreaker">GW%</th>
+            <th className="tiebreaker">OGW%</th>
+            <th className="tiebreaker mobile">Tiebreakers</th>
           </tr>
         </thead>
         <tbody>
@@ -37,9 +38,9 @@ function Standings() {
             <td>{index + 1}</td>
             <td>{player.player.name}</td>
             <td>{getScore(player.record)}</td>
-            <td>{formatPercentage(player.opponentMatchWin)}</td>
-            <td>{formatPercentage(player.gameWin)}</td>
-            <td>{formatPercentage(player.opponentGameWin)}</td>
+            <td className="tiebreaker">{formatPercentage(player.opponentMatchWin)}</td>
+            <td className="tiebreaker">{formatPercentage(player.gameWin)}</td>
+            <td className="tiebreaker">{formatPercentage(player.opponentGameWin)}</td>
           </tr>
         ))}
         </tbody>
