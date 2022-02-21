@@ -120,9 +120,33 @@ input {
 
 .standings {
   margin: 1rem auto;
+  text-align: left;
 
   .tiebreaker {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+  }
+
+  td,
+  th {
+    padding-right: 0.5rem;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 420px) {
+  .mobile {
+    display: revert;
+  }
+
+  .sm {
+    display: none;
   }
 }
