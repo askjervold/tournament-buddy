@@ -1,10 +1,10 @@
 $input-border-radius: 0.25rem;
 $input-font-size: 1rem;
-$input-padding: 0.5rem;
+$input-padding: 0.75rem;
 $input-margin: 0.25rem;
 
 body {
-  background-color: #a35436;
+  background-color: #888;
   color: white;
 }
 
@@ -47,7 +47,7 @@ a {
 .btn {
   color: white;
   background-color: #64877a;
-  border: none;
+  border: solid 1px #ddd;
   border-radius: $input-border-radius;
   font-size: $input-font-size;
   cursor: pointer;
@@ -115,6 +115,18 @@ input {
     margin: $input-margin;
     padding: $input-padding;
     border-bottom: solid 1px;
+  }
+}
+
+.matches {
+  .result-input {
+    input {
+      max-width: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+    }
   }
 }
 
