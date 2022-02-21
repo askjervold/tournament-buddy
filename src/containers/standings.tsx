@@ -61,7 +61,10 @@ function Standings() {
       <LinkButton to={Routes.TOURNAMENT}>Back to overview</LinkButton>
     </>
   ) : (
-    <p>No rounds played</p>
+    <>
+      <p>No rounds played</p>
+      <LinkButton to={Routes.TOURNAMENT}>Back to overview</LinkButton>
+    </>
   );
 }
 

@@ -6,7 +6,11 @@ import Routes from '../constants/routes';
 import { useTournamentContext } from '../contexts/tournament-context';
 import { endTournament } from '../service';
 import { Round } from '../types';
-import { getMatchesFromPairings, getRandomPairings, getSwissPairings } from '../utils/rounds';
+import {
+  getMatchesFromPairings,
+  getRandomPairings,
+  getSwissPairings,
+} from '../utils/rounds';
 
 function Overview() {
   const history = useHistory();
@@ -15,13 +19,21 @@ function Overview() {
 
   const startRound = () => {
     const roundNumber = (rounds[rounds.length - 1]?.number || 0) + 1;
-    const pairings = rounds.length === 0 ? getRandomPairings(players) : getSwissPairings(players, rounds, false)
+    const pairings =
+      rounds.length === 0
+        ? getRandomPairings(players)
+        : getSwissPairings(players, rounds, false);
 
     setRounds((prev) => [
       ...prev,
       { number: roundNumber, matches: getMatchesFromPairings(pairings) },
     ]);
     history.push(path + Routes.ROUND + `/${roundNumber}`);
+  };
+
+  const completeTournament = () => {
+    history.push(path + Routes.STANDINGS);
+    endTournament();
   };
 
   const latestRound: Round | undefined = rounds[rounds.length - 1];
@@ -49,7 +61,7 @@ function Overview() {
           ) : (
             <Button onClick={startRound}>Start next round</Button>
           )}
-          <Button onClick={endTournament}>End tournament</Button>
+          <Button onClick={completeTournament}>End tournament</Button>
         </>
       ) : (
         <LinkButton to={path + Routes.SETUP}>Set up tournament</LinkButton>
